@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Women's Safety Portal - Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, #1f1c2c, #928dab);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      margin: 0;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .profile-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 4px solid #fff;
+      background: url('https://cdn-icons-png.flaticon.com/512/4712/4712027.png') no-repeat center/cover;
+      margin: 20px auto 10px;
+      box-shadow: 0 0 15px #fff;
+    }
+
+    .features {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .feature-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid #fff;
+      color: #fff;
+      padding: 15px 25px;
+      border-radius: 20px 0 20px 0;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .feature-btn:hover {
+      background: #fff;
+      color: #1f1c2c;
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #fff;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome to Women's Safety Portal</h1>
+  </header>
+
+  <div class="profile-img"></div>
+
+  <div class="features">
+    <div class="feature-btn" onclick="window.location.href='chat.html'">💬 Community Chat</div>
+    <div class="feature-btn" onclick="window.location.href='harassment_types.html'">🚨 Types of Harassment</div>
+    <div class="feature-btn" onclick="window.location.href='share_location.html'">📍 Share Live Location</div>
+    <div class="feature-btn" onclick="alert('SOS Activated!')">🆘 SOS Emergency</div>
+    <div class="feature-btn" onclick="alert('Loading Safety Tips...')">📚 Safety Tips & Blogs</div>
+  </div>
+</body>
+</html>

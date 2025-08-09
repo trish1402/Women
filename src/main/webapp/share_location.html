@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Location Tracking - Women's Safety Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #ffecd1 0%, #fcb69f 50%, #ffecd1 100%);
+            min-height: 100vh;
+            color: #5a4037;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #8b4513;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 10px rgba(139, 69, 19, 0.1);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.85;
+            font-weight: 300;
+            color: #a0522d;
+        }
+
+        .card {
+            background: rgba(255, 248, 240, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(255, 182, 193, 0.2);
+            border: 1px solid rgba(255, 192, 203, 0.3);
+        }
+
+        .status-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .status-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 12px;
+            animation: pulse 2s infinite;
+        }
+
+        .status-safe { background: #ff9a8b; }
+        .status-warning { background: #ff8c42; }
+        .status-danger { background: #e74c3c; }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 154, 139, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 154, 139, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 154, 139, 0); }
+        }
+
+        .status-text {
+            font-weight: 600;
+            font-size: 1em;
+            color: #8b4513;
+        }
+
+        .last-update {
+            font-size: 0.85em;
+            color: #cd853f;
+        }
+
+        .timer-display {
+            font-size: 1.5em;
+            font-weight: 700;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #fff5ee, #ffe4e1);
+            border-radius: 15px;
+            margin: 20px 0;
+            color: #8b4513;
+            border: 1px solid rgba(255, 192, 203, 0.2);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.95em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff9a8b, #ffa07a);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 154, 139, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 154, 139, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+        }
+
+        .btn-test {
+            background: linear-gradient(135deg, #ff8c42, #ff6b35);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 140, 66, 0.3);
+        }
+
+        .settings-section h3 {
+            margin-bottom: 15px;
+            color: #8b4513;
+            font-weight: 600;
+        }
+
+        .settings-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: #8b4513;
+        }
+
+        select {
+            padding: 8px 15px;
+            border: 2px solid #ffc0cb;
+            border-radius: 10px;
+            background: white;
+            font-size: 0.9em;
+            color: #8b4513;
+            cursor: pointer;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #ff9a8b;
+        }
+
+        .progress-container {
+            margin: 15px 0;
+            display: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #ffe4e1;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            transition: width 1s ease;
+            border-radius: 4px;
+        }
+
+        .progress-safe { background: linear-gradient(90deg, #ff9a8b, #ffa07a); }
+        .progress-warning { background: linear-gradient(90deg, #ff8c42, #ff6b35); }
+        .progress-danger { background: linear-gradient(90deg, #e74c3c, #c0392b); }
+
+        .countdown-text {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 0.9em;
+            color: #cd853f;
+        }
+
+        .location-card {
+            display: none;
+        }
+
+        .location-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .location-item {
+            background: #fff5ee;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(255, 192, 203, 0.2);
+        }
+
+        .location-label {
+            font-size: 0.8em;
+            color: #cd853f;
+            margin-bottom: 4px;
+        }
+
+        .location-value {
+            font-weight: 600;
+            color: #8b4513;
+        }
+
+        /* Emergency Modal */
+        .emergency-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(139, 69, 19, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .emergency-modal {
+            background: #fff8f0;
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(139, 69, 19, 0.3);
+            animation: emergencyPulse 1s infinite alternate;
+            border: 3px solid #e74c3c;
+        }
+
+        @keyframes emergencyPulse {
+            0% { box-shadow: 0 20px 60px rgba(231, 76, 60, 0.3); }
+            100% { box-shadow: 0 20px 60px rgba(231, 76, 60, 0.6); }
+        }
+
+        .emergency-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+        }
+
+        .emergency-title {
+            color: #e74c3c;
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .emergency-message {
+            color: #8b4513;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .emergency-countdown {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 25px;
+            animation: countdownBlink 1s infinite;
+        }
+
+        @keyframes countdownBlink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.7; }
+        }
+
+        .emergency-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn-safe {
+            background: linear-gradient(135deg, #ff9a8b, #ffa07a);
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-sos {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-safe:hover, .btn-sos:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛡️ Smart Location Tracking</h1>
+            <p>Auto-escalation system for your safety</p>
+        </div>
+
+        <!-- Main Status Card -->
+        <div class="card">
+            <div class="status-section">
+                <div class="status-info">
+                    <span class="status-indicator status-safe" id="statusIndicator"></span>
+                    <span class="status-text" id="statusText">Ready to start tracking</span>
+                </div>
+                <div class="last-update" id="lastUpdate">Not started</div>
+            </div>
+
+            <div class="timer-display" id="timerDisplay">
+                Click "Start Tracking" to begin
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-primary" id="startBtn" onclick="startTracking()">
+                    🚀 Start Tracking
+                </button>
+                <button class="btn btn-secondary" id="stopBtn" onclick="stopTracking()" style="display: none;">
+                    ⏹️ Stop Tracking
+                </button>
+                <button class="btn btn-test" id="simulateBtn" onclick="simulateLocationFailure()" style="display: none;">
+                    🧪 Test Emergency
+                </button>
+            </div>
+        </div>
+
+        <!-- Settings Card -->
+        <div class="card">
+            <div class="settings-section">
+                <h3>⚡ Emergency Settings</h3>
+                <div class="settings-row">
+                    <label>Trigger alert if no location update for:</label>
+                    <select id="escalationTime" onchange="updateEscalationTime()">
+                        <option value="2">2 minutes (Demo)</option>
+                        <option value="5">5 minutes</option>
+                        <option value="10" selected>10 minutes</option>
+                        <option value="15">15 minutes</option>
+                        <option value="30">30 minutes</option>
+                    </select>
+                </div>
+
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-safe" id="progressFill"></div>
+                    </div>
+                    <div class="countdown-text" id="countdownText">
+                        Emergency alert in: <span id="countdownTime">--</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Location Card -->
+        <div class="card location-card" id="locationCard">
+            <h3>📍 Current Location</h3>
+            <div class="location-grid">
+                <div class="location-item">
+                    <div class="location-label">Latitude</div>
+                    <div class="location-value" id="currentLat">--</div>
+                </div>
+                <div class="location-item">
+                    <div class="location-label">Longitude</div>
+                    <div class="location-value" id="currentLng">--</div>
+                </div>
+                <div class="location-item">
+                    <div class="location-label">Accuracy</div>
+                    <div class="location-value" id="accuracy">-- meters</div>
+                </div>
+                <div class="location-item">
+                    <div class="location-label">Last Updated</div>
+                    <div class="location-value" id="locationTime">--</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Emergency Alert Modal -->
+    <div class="emergency-overlay" id="emergencyOverlay">
+        <div class="emergency-modal">
+            <div class="emergency-icon">🚨</div>
+            <div class="emergency-title">EMERGENCY ALERT</div>
+            <div class="emergency-message">
+                Location hasn't updated for <span id="alertDuration">--</span> minutes!<br>
+                Are you safe?
+            </div>
+            <div class="emergency-countdown" id="emergencyCountdown">
+                Alerting contacts in: 60s
+            </div>
+            <div class="emergency-buttons">
+                <button class="btn-safe" onclick="confirmSafety()">
+                    ✅ I'm Safe
+                </button>
+                <button class="btn-sos" onclick="triggerSOS()">
+                    🆘 Send SOS
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let isTracking = false;
+        let lastLocationUpdate = null;
+        let escalationTimeMinutes = 10;
+        let locationUpdateInterval = null;
+        let escalationCheckInterval = null;
+        let emergencyCountdownInterval = null;
+        let currentPosition = null;
+        let simulateFailure = false;
+
+        function startTracking() {
+            if (navigator.geolocation) {
+                isTracking = true;
+                lastLocationUpdate = Date.now();
+                
+                updateStatus('safe', 'Location tracking started');
+                updateTimer('Tracking active - Getting location...');
+                
+                // Show/hide buttons
+                document.getElementById('startBtn').style.display = 'none';
+                document.getElementById('stopBtn').style.display = 'inline-block';
+                document.getElementById('simulateBtn').style.display = 'inline-block';
+                document.getElementById('locationCard').style.display = 'block';
+                
+                startLocationUpdates();
+                startEscalationMonitoring();
+                
+                console.log('Auto-escalation system started');
+            } else {
+                alert('Geolocation is not supported by this browser.');
+            }
+        }
+
+        function stopTracking() {
+            isTracking = false;
+            
+            if (locationUpdateInterval) clearInterval(locationUpdateInterval);
+            if (escalationCheckInterval) clearInterval(escalationCheckInterval);
+            if (emergencyCountdownInterval) clearInterval(emergencyCountdownInterval);
+            
+            updateStatus('safe', 'Tracking stopped');
+            updateTimer('Click "Start Tracking" to begin');
+            
+            document.getElementById('emergencyOverlay').style.display = 'none';
+            hideProgressBar();
+            
+            document.getElementById('startBtn').style.display = 'inline-block';
+            document.getElementById('stopBtn').style.display = 'none';
+            document.getElementById('simulateBtn').style.display = 'none';
+            document.getElementById('locationCard').style.display = 'none';
+            
+            console.log('Auto-escalation system stopped');
+        }
+
+        function startLocationUpdates() {
+            getCurrentLocation();
+            
+            locationUpdateInterval = setInterval(() => {
+                if (isTracking) {
+                    getCurrentLocation();
+                }
+            }, 30000);
+        }
+
+        function getCurrentLocation() {
+            if (simulateFailure) {
+                console.log('Simulating location failure - skipping update');
+                updateStatus('warning', 'Location updates stopped (test mode)');
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    currentPosition = position;
+                    lastLocationUpdate = Date.now();
+                    
+                    updateLocationDisplay(position);
+                    updateStatus('safe', 'Location tracking active');
+                    hideProgressBar();
+                    
+                    console.log('Location updated:', position.coords.latitude, position.coords.longitude);
+                },
+                (error) => {
+                    console.error('Geolocation error:', error);
+                    let errorMsg = 'Location update failed: ';
+                    
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            errorMsg += 'Permission denied';
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            errorMsg += 'Position unavailable';
+                            break;
+                        case error.TIMEOUT:
+                            errorMsg += 'Request timeout';
+                            break;
+                        default:
+                            errorMsg += 'Unknown error';
+                            break;
+                    }
+                    
+                    updateStatus('warning', errorMsg);
+                    showFakeLocation();
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 60000
+                }
+            );
+        }
+
+        function updateLocationDisplay(position) {
+            document.getElementById('currentLat').textContent = position.coords.latitude.toFixed(6);
+            document.getElementById('currentLng').textContent = position.coords.longitude.toFixed(6);
+            document.getElementById('accuracy').textContent = Math.round(position.coords.accuracy) + ' meters';
+            document.getElementById('locationTime').textContent = new Date().toLocaleTimeString();
+            document.getElementById('lastUpdate').textContent = 'Last update: ' + new Date().toLocaleTimeString();
+        }
+
+        function showFakeLocation() {
+            document.getElementById('currentLat').textContent = '22.574600 (Demo)';
+            document.getElementById('currentLng').textContent = '88.362900 (Demo)';
+            document.getElementById('accuracy').textContent = 'GPS Failed';
+            document.getElementById('locationTime').textContent = new Date().toLocaleTimeString() + ' (Failed)';
+            document.getElementById('lastUpdate').textContent = 'Last update: GPS ERROR';
+        }
+
+        function startEscalationMonitoring() {
+            escalationCheckInterval = setInterval(() => {
+                if (isTracking && lastLocationUpdate) {
+                    checkEscalationStatus();
+                }
+            }, 10000);
+        }
+
+        function checkEscalationStatus() {
+            const now = Date.now();
+            const timeSinceLastUpdate = lastLocationUpdate ? (now - lastLocationUpdate) / 1000 / 60 : 999;
+            const escalationThreshold = escalationTimeMinutes;
+            
+            if (timeSinceLastUpdate >= escalationThreshold) {
+                triggerAutoEscalation(Math.floor(timeSinceLastUpdate));
+            } else if (timeSinceLastUpdate >= escalationThreshold * 0.5) {
+                showProgressBar(timeSinceLastUpdate, escalationThreshold);
+            } else {
+                hideProgressBar();
+            }
+        }
+
+        function showProgressBar(timePassed, threshold) {
+            const progressPercent = (timePassed / threshold) * 100;
+            const remainingMinutes = threshold - timePassed;
+            
+            const container = document.getElementById('progressContainer');
+            const progressFill = document.getElementById('progressFill');
+            const countdownTime = document.getElementById('countdownTime');
+            
+            container.style.display = 'block';
+            progressFill.style.width = progressPercent + '%';
+            
+            if (progressPercent > 80) {
+                progressFill.className = 'progress-fill progress-danger';
+                updateStatus('danger', 'CRITICAL: No location update for ' + Math.floor(timePassed) + ' minutes');
+            } else if (progressPercent > 60) {
+                progressFill.className = 'progress-fill progress-warning';
+                updateStatus('warning', 'WARNING: No location update for ' + Math.floor(timePassed) + ' minutes');
+            }
+            
+            countdownTime.textContent = Math.ceil(remainingMinutes) + ' minutes';
+        }
+
+        function hideProgressBar() {
+            document.getElementById('progressContainer').style.display = 'none';
+        }
+
+        function triggerAutoEscalation(minutesElapsed) {
+            console.log('AUTO-ESCALATION TRIGGERED after', minutesElapsed, 'minutes');
+            
+            updateStatus('danger', 'AUTO-ESCALATION TRIGGERED');
+            updateTimer('EMERGENCY: Location not updating!');
+            
+            document.getElementById('emergencyOverlay').style.display = 'flex';
+            document.getElementById('alertDuration').textContent = minutesElapsed;
+            
+            startEmergencyCountdown();
+            hideProgressBar();
+        }
+
+        function startEmergencyCountdown() {
+            let secondsLeft = 60;
+            
+            emergencyCountdownInterval = setInterval(() => {
+                document.getElementById('emergencyCountdown').textContent = 
+                    `Alerting contacts in: ${secondsLeft}s`;
+                
+                secondsLeft--;
+                
+                if (secondsLeft <= 0) {
+                    clearInterval(emergencyCountdownInterval);
+                    sendEmergencyAlerts();
+                }
+            }, 1000);
+        }
+
+        function confirmSafety() {
+            console.log('User confirmed safety');
+            
+            if (emergencyCountdownInterval) {
+                clearInterval(emergencyCountdownInterval);
+            }
+            
+            document.getElementById('emergencyOverlay').style.display = 'none';
+            lastLocationUpdate = Date.now();
+            updateStatus('safe', 'Safety confirmed - Tracking resumed');
+            updateTimer('Tracking resumed');
+            
+            getCurrentLocation();
+        }
+
+        function triggerSOS() {
+            console.log('User triggered SOS manually');
+            
+            if (emergencyCountdownInterval) {
+                clearInterval(emergencyCountdownInterval);
+            }
+            
+            sendEmergencyAlerts();
+        }
+
+        function sendEmergencyAlerts() {
+            console.log('SENDING EMERGENCY ALERTS TO CONTACTS');
+            
+            updateStatus('danger', 'EMERGENCY ALERTS SENT');
+            document.getElementById('emergencyCountdown').textContent = 
+                '🚨 ALERTS SENT TO EMERGENCY CONTACTS! 🚨';
+            
+            alert('🚨 EMERGENCY ALERTS SENT! 🚨\n\nYour emergency contacts have been notified!\nLocal authorities may also be contacted.');
+        }
+
+        function updateStatus(type, message) {
+            const indicator = document.getElementById('statusIndicator');
+            const statusText = document.getElementById('statusText');
+            
+            indicator.className = `status-indicator status-${type}`;
+            statusText.textContent = message;
+        }
+
+        function updateTimer(message) {
+            document.getElementById('timerDisplay').textContent = message;
+        }
+
+        function updateEscalationTime() {
+            escalationTimeMinutes = parseInt(document.getElementById('escalationTime').value);
+            console.log('Escalation time updated to:', escalationTimeMinutes, 'minutes');
+            
+            if (isTracking) {
+                hideProgressBar();
+            }
+        }
+
+        function simulateLocationFailure() {
+            simulateFailure = !simulateFailure;
+            const btn = document.getElementById('simulateBtn');
+            
+            if (simulateFailure) {
+                btn.textContent = '✅ Resume Updates';
+                updateStatus('warning', 'Location updates STOPPED (test mode)');
+                console.log('🧪 SIMULATION: Location updates stopped');
+                
+                if (locationUpdateInterval) {
+                    clearInterval(locationUpdateInterval);
+                }
+            } else {
+                btn.textContent = '🧪 Test Emergency';
+                updateStatus('safe', 'Location updates RESUMED');
+                console.log('🧪 SIMULATION: Location updates resumed');
+                
+                lastLocationUpdate = Date.now();
+                startLocationUpdates();
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Auto-escalation system initialized');
+            updateStatus('safe', 'Ready to start tracking');
+        });
+    </script>
+</body>
+</html>

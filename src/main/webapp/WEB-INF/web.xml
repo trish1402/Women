@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<display-name>Women Harassment Portal</display-name>
+    <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+</welcome-file-list>
+    <servlet>
+        <servlet-name>RegisterServlet</servlet-name>
+        <servlet-class>demoapp2.RegisterServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RegisterServlet</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>demoapp2.LoginServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+    <servlet-name>SendMessageServlet</servlet-name>
+    <servlet-class>demoapp2.SendMessageServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+    <servlet-name>SendMessageServlet</servlet-name>
+    <url-pattern>/SendMessageServlet</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>FetchMessagesServlet</servlet-name>
+    <servlet-class>demoapp2.FetchMessagesServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+    <servlet-name>FetchMessagesServlet</servlet-name>
+    <url-pattern>/FetchMessagesServlet</url-pattern>
+</servlet-mapping>
+
+<servlet>
+<servlet-name>GetCurrentUserServlet</servlet-name>
+<servlet-class>demoapp2.GetCurrentUserServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name>GetCurrentUserServlet</servlet-name>
+<url-pattern>/GetCurrentUserServlet</url-pattern>
+</servlet-mapping>
+
+ <servlet>
+        <servlet-name>SubmitHarassmentReportServlet</servlet-name>
+        <servlet-class>demoapp2.SubmitHarassmentReportServlet</servlet-class>
+        
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>SubmitHarassmentReportServlet</servlet-name>
+        <url-pattern>/SubmitHarassmentReportServlet</url-pattern>
+    </servlet-mapping>
+    
+    
+     <servlet>
+        <servlet-name>GetNearestPoliceStationServlet</servlet-name>
+        <servlet-class>demoapp2.GetNearestPoliceStationServlet</servlet-class>
+        
+    </servlet>
+    
+     <servlet-mapping>
+        <servlet-name>GetNearestPoliceStationServlet</servlet-name>
+        <url-pattern>/GetNearestPoliceStationServlet</url-pattern>
+    </servlet-mapping>
+
+</web-app>

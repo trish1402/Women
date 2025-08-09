@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Harassment - Women's Safety Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #8b7355 0%, #a0845c 50%, #b8956a 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #6b5b73, #8b7355);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            font-size: 1em;
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(135deg, #8b7355, #6b5b73);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
+            padding: 30px;
+            border-radius: 25px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+            font-weight: bold;
+        }
+
+        .form-header p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            color: #f4f1de;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            line-height: 1.6;
+        }
+
+        .selected-type {
+            background: linear-gradient(135deg, rgba(139, 115, 85, 0.3), rgba(160, 132, 92, 0.2));
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 1px solid rgba(139, 115, 85, 0.4);
+            backdrop-filter: blur(10px);
+        }
+
+        .selected-type h3 {
+            color: #e9c46a;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+            margin-bottom: 8px;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .selected-type p {
+            color: #f4f1de;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            opacity: 0.9;
+        }
+
+        .progress-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            padding: 0 20px;
+        }
+
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .progress-step::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            right: -50%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 1;
+        }
+
+        .progress-step:last-child::before {
+            display: none;
+        }
+
+        .progress-step.active::before {
+            background: linear-gradient(135deg, #ff8c00, #ffa500);
+        }
+
+        .progress-circle {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .progress-step.active .progress-circle {
+            background: linear-gradient(135deg, #ff8c00, #ffa500);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 140, 0, 0.4);
+        }
+
+        .progress-step span {
+            font-size: 0.9em;
+            color: #ffeaa7;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .report-form {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.08));
+            padding: 40px;
+            border-radius: 25px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-section {
+            margin-bottom: 35px;
+        }
+
+        .form-section h3 {
+            color: #ffa500;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ffd700;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            font-weight: 500;
+            font-size: 1em;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 15px 18px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1em;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #ff8c00;
+            box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+            line-height: 1.5;
+        }
+
+        .anonymous-toggle {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 165, 0, 0.2), rgba(255, 140, 0, 0.1));
+            border-radius: 15px;
+            border: 1px solid rgba(255, 165, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .anonymous-toggle span {
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .toggle-switch.active {
+            background: linear-gradient(135deg, #ff8c00, #ffa500);
+            border-color: #ff8c00;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(30px);
+        }
+
+        .anonymous-note {
+            font-size: 0.9em;
+            opacity: 0.8;
+            color: #ffeaa7;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .file-upload {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload-btn {
+            display: block;
+            width: 100%;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.2), rgba(39, 174, 96, 0.1));
+            border: 2px dashed rgba(46, 204, 113, 0.6);
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .file-upload-btn:hover {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.3), rgba(39, 174, 96, 0.2));
+            border-color: rgba(46, 204, 113, 0.8);
+        }
+
+        .file-upload-btn .icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+            display: block;
+            color: #2ecc71;
+        }
+
+        .file-upload-btn .text {
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+            font-weight: 600;
+        }
+
+        .file-upload-btn .subtext {
+            color: #ffeaa7;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .file-list {
+            margin-top: 15px;
+        }
+
+        .file-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .file-item span {
+            color: #ffeaa7;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .remove-file {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: all 0.3s ease;
+        }
+
+        .remove-file:hover {
+            background: linear-gradient(135deg, #c0392b, #a93226);
+            transform: scale(1.05);
+        }
+
+        .location-section {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.2), rgba(41, 128, 185, 0.1));
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(52, 152, 219, 0.3);
+            backdrop-filter: blur(10px);
+            margin-bottom: 25px;
+        }
+
+        .location-section h4 {
+            color: #74b9ff;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .location-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .location-btn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .location-btn:hover {
+            background: linear-gradient(135deg, #2980b9, #1f4e79);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .location-display {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            display: none;
+            backdrop-filter: blur(5px);
+        }
+
+        .location-display.show {
+            display: block;
+        }
+
+        .location-display p {
+            color: #ffeaa7;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            margin-bottom: 8px;
+        }
+
+        .nearest-station {
+            background: rgba(52, 152, 219, 0.2);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 1px solid rgba(52, 152, 219, 0.3);
+        }
+
+        .submit-section {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .submit-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #ff8c00, #ff7f00);
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            border-radius: 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 180px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #ff7f00, #ff6500);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 140, 0, 0.4);
+        }
+
+        .submit-btn:disabled {
+            background: rgba(146, 141, 171, 0.5);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .draft-btn {
+            background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            border-radius: 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 180px;
+        }
+
+        .draft-btn:hover {
+            background: linear-gradient(135deg, #7f8c8d, #6c7b7d);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(149, 165, 166, 0.4);
+        }
+
+        .safety-note {
+            background: linear-gradient(135deg, rgba(241, 196, 15, 0.2), rgba(230, 126, 34, 0.1));
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 30px;
+            border: 1px solid rgba(241, 196, 15, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .safety-note h4 {
+            color: #f1c40f;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .safety-note p {
+            color: #ffeaa7;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .submit-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .submit-btn, .draft-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .location-buttons {
+                flex-direction: column;
+            }
+
+            .progress-indicator {
+                padding: 0 10px;
+            }
+
+            .progress-step span {
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="harassment_types.html" class="back-btn">← Back to Types</a>
+        
+        <div class="form-header">
+            <h1>📝 File Harassment Report</h1>
+            <p>Your report will be securely submitted to the nearest police station. All information is handled with complete confidentiality and care.</p>
+            <div class="selected-type" id="selectedType">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <div class="progress-indicator">
+            <div class="progress-step active">
+                <div class="progress-circle">1</div>
+                <span>Personal Info</span>
+            </div>
+            <div class="progress-step">
+                <div class="progress-circle">2</div>
+                <span>Incident Details</span>
+            </div>
+            <div class="progress-step">
+                <div class="progress-circle">3</div>
+                <span>Evidence & Location</span>
+            </div>
+            <div class="progress-step">
+                <div class="progress-circle">4</div>
+                <span>Submit Report</span>
+            </div>
+        </div>
+
+        <form class="report-form" id="reportForm" enctype="multipart/form-data">
+            <!-- Anonymous Toggle -->
+            <div class="anonymous-toggle">
+                <span>🎭 Report Anonymously</span>
+                <div class="toggle-switch" id="anonymousToggle" onclick="toggleAnonymous()">
+                    <div class="toggle-slider"></div>
+                </div>
+                <div class="anonymous-note">Your identity will be protected. Personal details will be hidden from the report.</div>
+            </div>
+
+            <!-- Personal Information Section -->
+            <div class="form-section" id="personalSection">
+                <h3>👤 Personal Information</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reporterName">Full Name *</label>
+                        <input type="text" id="reporterName" name="reporterName" required placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="contactNumber">Contact Number *</label>
+                        <input type="tel" id="contactNumber" name="contactNumber" required placeholder="+91 XXXXX XXXXX">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" id="age" name="age" min="1" max="120" placeholder="Your age">
+                    </div>
+                </div>
+                <div class="form-group full-width">
+                    <label for="address">Your Address</label>
+                    <textarea id="address" name="address" placeholder="Enter your current address (optional for anonymous reports)"></textarea>
+                </div>
+            </div>
+
+            <!-- Incident Details Section -->
+            <div class="form-section">
+                <h3>📋 Incident Details</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="incidentDate">Date of Incident *</label>
+                        <input type="date" id="incidentDate" name="incidentDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="incidentTime">Time of Incident</label>
+                        <input type="time" id="incidentTime" name="incidentTime">
+                    </div>
+                </div>
+                <div class="form-group full-width">
+                    <label for="incidentLocation">Location of Incident *</label>
+                    <textarea id="incidentLocation" name="incidentLocation" required placeholder="Provide detailed location where the incident occurred (street, landmark, building, etc.)"></textarea>
+                </div>
+                <div class="form-group full-width">
+                    <label for="incidentDescription">Detailed Description of Incident *</label>
+                    <textarea id="incidentDescription" name="incidentDescription" required placeholder="Please provide a detailed account of what happened. Include relevant context, timeline, and any important details." style="min-height: 150px;"></textarea>
+                </div>
+                <div class="form-group full-width">
+                    <label for="perpetratorDetails">Perpetrator Information</label>
+                    <textarea id="perpetratorDetails" name="perpetratorDetails" placeholder="If known, provide details about the person(s) involved - description, name, relationship, etc. (Leave blank if unknown)"></textarea>
+                </div>
+                <div class="form-group full-width">
+                    <label for="witnesses">Witnesses</label>
+                    <textarea id="witnesses" name="witnesses" placeholder="Were there any witnesses? Please provide their details if available and they consent to be contacted."></textarea>
+                </div>
+            </div>
+
+            <!-- Evidence Upload Section -->
+            <div class="form-section">
+                <h3>📎 Evidence & Documentation</h3>
+                <div class="form-group full-width">
+                    <label>Upload Evidence Files</label>
+                    <div class="file-upload">
+                        <input type="file" id="evidenceFiles" name="evidenceFiles" multiple accept="image/*,video/*,audio/*,.pdf,.doc,.docx" onchange="handleFileUpload(this)">
+                        <div class="file-upload-btn">
+                            <span class="icon">📁</span>
+                            <div class="text">Click to Upload Evidence</div>
+                            <div class="subtext">Photos, videos, audio recordings, documents (Max 10 files, 50MB each)</div>
+                        </div>
+                    </div>
+                    <div class="file-list" id="fileList">
+                        <!-- Uploaded files will appear here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Location Section -->
+            <div class="location-section">
+                <h4>📍 Location Services</h4>
+                <p style="color: #ffeaa7; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); margin-bottom: 15px;">Help us find the nearest police station for your report</p>
+                <div class="location-buttons">
+                    <button type="button" class="location-btn" onclick="getCurrentLocation()">🎯 Use Current Location</button>
+                    <button type="button" class="location-btn" onclick="findNearestStation()">🚔 Find Nearest Station</button>
+                </div>
+                <div class="location-display" id="locationDisplay">
+                    <p><strong>📍 Your Location:</strong> <span id="userLocation">Not detected</span></p>
+                    <div class="nearest-station" id="nearestStation" style="display: none;">
+                        <p><strong>🚔 Nearest Police Station:</strong></p>
+                        <p id="stationDetails">Searching...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Section -->
+            <div class="submit-section">
+                <div class="submit-buttons">
+                    <button type="button" class="draft-btn" onclick="saveDraft()">💾 Save as Draft</button>
+                    <button type="submit" class="submit-btn" id="submitBtn">🚀 Submit Report</button>
+                </div>
+
+                <div class="safety-note">
+                    <h4>🛡️ Your Safety & Privacy</h4>
+                    <p><strong>✓ Confidential:</strong> Your report is encrypted and securely transmitted.</p>
+                    <p><strong>✓ Professional:</strong> Handled by trained authorities with sensitivity.</p>
+                    <p><strong>✓ Trackable:</strong> You'll receive a case number for follow-up.</p>
+                    <p><strong>✓ Supportive:</strong> Resources and support will be provided throughout the process.</p>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let uploadedFiles = [];
+        let currentLocation = null;
+        let isAnonymous = false;
+
+        // Load selected harassment type on page load
+        window.onload = function() {
+            const selectedType = localStorage.getItem('selectedHarassmentType');
+            const typeDetails = localStorage.getItem('harassmentTypeDetails');
+            
+            if (selectedType && typeDetails) {
+                try {
+                    const details = JSON.parse(typeDetails);
+                    document.getElementById('selectedType').innerHTML = `
+                        <h3>${details.icon} ${details.name}</h3>
+                        <p>${details.description}</p>
+                    `;
+                } catch (error) {
+                    console.error('Error loading harassment type:', error);
+                    document.getElementById('selectedType').innerHTML = `
+                        <h3>📝 General Harassment Report</h3>
+                        <p>Please provide details about the incident you experienced.</p>
+                    `;
+                }
+            } else {
+                // Default if no type selected
+                document.getElementById('selectedType').innerHTML = `
+                    <h3>📝 General Harassment Report</h3>
+                    <p>Please provide details about the incident you experienced.</p>
+                `;
+            }
+        };
+
+        // Toggle anonymous reporting
+        function toggleAnonymous() {
+            isAnonymous = !isAnonymous;
+            const toggle = document.getElementById('anonymousToggle');
+            const personalSection = document.getElementById('personalSection');
+            
+            if (isAnonymous) {
+                toggle.classList.add('active');
+                personalSection.style.opacity = '0.5';
+                personalSection.style.pointerEvents = 'none';
+                
+                // Clear personal info when going anonymous
+                document.getElementById('reporterName').value = '';
+                document.getElementById('contactNumber').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('address').value = '';
+                document.getElementById('age').value = '';
+            } else {
+                toggle.classList.remove('active');
+                personalSection.style.opacity = '1';
+                personalSection.style.pointerEvents = 'auto';
+            }
+        }
+
+        // Handle file upload
+        function handleFileUpload(input) {
+            const files = Array.from(input.files);
+            const fileList = document.getElementById('fileList');
+            
+            files.forEach(file => {
+                // Check file size (50MB limit)
+                if (file.size > 50 * 1024 * 1024) {
+                    alert(`File ${file.name} is too large. Maximum size is 50MB.`);
+                    return;
+                }
+                
+                // Check total files limit
+                if (uploadedFiles.length >= 10) {
+                    alert('Maximum 10 files allowed.');
+                    return;
+                }
+                
+                uploadedFiles.push(file);
+                
+                // Create file item display
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <span>${file.name} (${formatFileSize(file.size)})</span>
+                    <button type="button" class="remove-file" onclick="removeFile(${uploadedFiles.length - 1})">Remove</button>
+                `;
+                fileList.appendChild(fileItem);
+            });
+            
+            // Clear input
+            input.value = '';
+        }
+
+        // Remove uploaded file
+        function removeFile(index) {
+            uploadedFiles.splice(index, 1);
+            updateFileList();
+        }
+
+        // Update file list display
+        function updateFileList() {
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '';
+            
+            uploadedFiles.forEach((file, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <span>${file.name} (${formatFileSize(file.size)})</span>
+                    <button type="button" class="remove-file" onclick="removeFile(${index})">Remove</button>
+                `;
+                fileList.appendChild(fileItem);
+            });
+        }
+
+        // Format file size
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Get current location
+        function getCurrentLocation() {
+            const locationDisplay = document.getElementById('locationDisplay');
+            const userLocationSpan = document.getElementById('userLocation');
+            
+            if (!navigator.geolocation) {
+                alert('Geolocation is not supported by this browser.');
+                return;
+            }
+            
+            locationDisplay.classList.add('show');
+            userLocationSpan.textContent = 'Detecting location...';
+            
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    currentLocation = {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude
+                    };
+                    
+                    userLocationSpan.textContent = `${currentLocation.latitude.toFixed(6)}, ${currentLocation.longitude.toFixed(6)}`;
+                    
+                    // Automatically find nearest station
+                    findNearestStation();
+                },
+                function(error) {
+                    userLocationSpan.textContent = 'Location access denied';
+                    console.error('Location error:', error);
+                }
+            );
+        }
+
+        // Find nearest police station
+        function findNearestStation() {
+            if (!currentLocation) {
+                alert('Please get your current location first.');
+                return;
+            }
+            
+            const stationDetails = document.getElementById('stationDetails');
+            const nearestStation = document.getElementById('nearestStation');
+            
+            nearestStation.style.display = 'block';
+            stationDetails.textContent = 'Finding nearest police station...';
+            
+            fetch('GetNearestPoliceStationServlet', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `latitude=${currentLocation.latitude}&longitude=${currentLocation.longitude}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success' && data.stations.length > 0) {
+                    const station = data.stations[0]; // Get the nearest station
+                    stationDetails.innerHTML = `
+                        <strong>${station.name}</strong><br>
+                        📍 ${station.address}<br>
+                        📞 ${station.contact}<br>
+                        📏 ${station.distance} km away
+                    `;
+                    
+                    // Store selected police station
+                    document.querySelector('input[name="policeStation"]').value = station.name;
+                } else {
+                    stationDetails.textContent = 'No police stations found nearby.';
+                }
+            })
+            .catch(error => {
+                console.error('Error finding police station:', error);
+                stationDetails.textContent = 'Error finding police stations.';
+            });
+        }
+
+        // Add hidden input for police station
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('reportForm');
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'policeStation';
+            hiddenInput.value = '';
+            form.appendChild(hiddenInput);
+        });
+
+        // Save as draft
+        function saveDraft() {
+            const formData = new FormData(document.getElementById('reportForm'));
+            const draftData = {};
+            
+            for (let [key, value] of formData.entries()) {
+                draftData[key] = value;
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('harassmentReportDraft', JSON.stringify(draftData));
+            alert('✅ Draft saved successfully! You can continue later.');
+        }
+
+        // Load draft if exists
+        function loadDraft() {
+            const draftData = localStorage.getItem('harassmentReportDraft');
+            if (draftData) {
+                try {
+                    const data = JSON.parse(draftData);
+                    
+                    // Fill form with draft data
+                    Object.keys(data).forEach(key => {
+                        const element = document.querySelector(`[name="${key}"]`);
+                        if (element) {
+                            element.value = data[key];
+                        }
+                    });
+                    
+                    console.log('Draft loaded successfully');
+                } catch (error) {
+                    console.error('Error loading draft:', error);
+                }
+            }
+        }
+
+        // Submit form
+        document.getElementById('reportForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.textContent;
+            
+            // Validate required fields
+            if (!validateForm()) {
+                return;
+            }
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = '📤 Submitting Report...';
+            
+            const formData = new FormData();
+            
+            // Add form fields
+            const form = document.getElementById('reportForm');
+            const inputs = form.querySelectorAll('input, textarea, select');
+            
+            inputs.forEach(input => {
+                if (input.type !== 'file' && input.name) {
+                    formData.append(input.name, input.value);
+                }
+            });
+            
+            // Add harassment type
+            const selectedType = localStorage.getItem('selectedHarassmentType');
+            if (selectedType) {
+                formData.append('reportType', selectedType);
+            }
+            
+            // Add anonymous flag
+            formData.append('isAnonymous', isAnonymous);
+            
+            // Add location if available
+            if (currentLocation) {
+                formData.append('latitude', currentLocation.latitude);
+                formData.append('longitude', currentLocation.longitude);
+            }
+            
+            // Submit the report
+            fetch('SubmitHarassmentReportServlet', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Clear draft
+                    localStorage.removeItem('harassmentReportDraft');
+                    
+                    // Show success message
+                    alert(`✅ Report submitted successfully!\n\n🔢 Case Number: ${data.caseNumber}\n\nPlease save this case number for tracking your report.`);
+                    
+                    // Redirect to dashboard
+                    window.location.href = 'dashboard.html';
+                } else {
+                    alert(`❌ Error submitting report: ${data.message}`);
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting report:', error);
+                alert('❌ Network error. Please try again.');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            });
+        });
+
+        // Form validation
+        function validateForm() {
+            const requiredFields = [
+                { id: 'incidentLocation', name: 'Incident Location' },
+                { id: 'incidentDescription', name: 'Incident Description' },
+                { id: 'incidentDate', name: 'Incident Date' }
+            ];
+            
+            if (!isAnonymous) {
+                requiredFields.push(
+                    { id: 'reporterName', name: 'Full Name' },
+                    { id: 'contactNumber', name: 'Contact Number' },
+                    { id: 'email', name: 'Email Address' }
+                );
+            }
+            
+            for (let field of requiredFields) {
+                const element = document.getElementById(field.id);
+                if (!element.value.trim()) {
+                    alert(`❌ Please fill in: ${field.name}`);
+                    element.focus();
+                    return false;
+                }
+            }
+            
+            // Validate email format if not anonymous
+            if (!isAnonymous) {
+                const email = document.getElementById('email').value;
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    alert('❌ Please enter a valid email address');
+                    document.getElementById('email').focus();
+                    return false;
+                }
+            }
+            
+            // Validate incident description length
+            const description = document.getElementById('incidentDescription').value;
+            if (description.length < 20) {
+                alert('❌ Please provide a more detailed description (at least 20 characters)');
+                document.getElementById('incidentDescription').focus();
+                return false;
+            }
+            
+            return true;
+        }
+
+        // Load draft on page load
+        window.addEventListener('load', function() {
+            loadDraft();
+        });
+    </script>
+</body>
+</html>

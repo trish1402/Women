@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Women Harassment Portal - Register</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      height: 100vh;
+      background-color: #fff6f0;
+    }
+
+    .left-section {
+      width: 35%;
+      background-color: #ffffff;
+      padding: 40px 30px;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .right-section {
+      width: 65%;
+      background-image: url('https://img.freepik.com/free-vector/gender-violence-concept_23-2148591739.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    h2 {
+      color: #d81b60;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    input[readonly] {
+      background-color: #f2f2f2;
+      color: #555;
+    }
+
+    button {
+      margin-top: 15px;
+      width: 100%;
+      background: #d81b60;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #b7154f;
+    }
+
+    .form-box {
+      animation: slideUp 0.4s ease-out;
+    }
+
+    @keyframes slideUp {
+      0% { transform: translateY(30px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    @media screen and (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      .left-section, .right-section {
+        width: 100%;
+        height: 50%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="left-section">
+    <div class="form-box">
+      <h2>Register to Report</h2>
+      <form action="register" method="post">
+        <label for="name">Full Name:</label>
+        <input type="text" name="name" required>
+
+        <label for="email">Email Address:</label>
+        <input type="email" name="email" required>
+
+        <label for="password">Create Password:</label>
+        <input type="password" name="password" required>
+
+        <label for="phone">Phone Number:</label>
+        <input type="text" name="phone" required>
+
+        <label for="location">Nearest Police Station:</label>
+        <input type="text" name="location" required>
+
+        <label for="role">Role (Victim/Witness):</label>
+        <input type="text" name="role" required>
+
+        <label for="gender">Gender:</label>
+        <input type="text" name="gender" value="Female" readonly>
+
+        <button type="submit">Register</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="right-section"></div>
+
+</body>
+</html>
