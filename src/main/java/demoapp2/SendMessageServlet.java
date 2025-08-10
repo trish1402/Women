@@ -17,10 +17,10 @@ import jakarta.servlet.http.HttpServletResponse;
 public class SendMessageServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    // Change DB credentials as per your setup
+    
     private static final String DB_URL = "jdbc:mysql://localhost:3306/Women";
     private static final String DB_USER = "root";
-    private static final String DB_PASS = "Trisha"; // replace with actual password
+    private static final String DB_PASS = "Trisha"; 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -39,7 +39,7 @@ public class SendMessageServlet extends HttpServlet {
         
 
         try {
-            // Load JDBC Driver
+            
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 

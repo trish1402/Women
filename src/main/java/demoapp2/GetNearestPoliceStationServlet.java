@@ -44,7 +44,7 @@ public class GetNearestPoliceStationServlet extends HttpServlet {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
-            // Calculate distance using Haversine formula in SQL
+            
             String sql = "SELECT station_id, station_name, address, contact_number, latitude, longitude, city, state, " +
                         "(6371 * acos(cos(radians(?)) * cos(radians(latitude)) * " +
                         "cos(radians(longitude) - radians(?)) + sin(radians(?)) * " +

@@ -13,10 +13,10 @@ import jakarta.servlet.http.HttpServletResponse;
 public class FetchMessagesServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    // Update DB credentials as needed
+    
     private static final String DB_URL = "jdbc:mysql://localhost:3306/Women";
     private static final String DB_USER = "root";
-    private static final String DB_PASS = "Trisha"; // change it
+    private static final String DB_PASS = "Trisha"; 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -55,7 +55,7 @@ public class FetchMessagesServlet extends HttpServlet {
             conn.close();
         } catch (Exception e) {
             e.printStackTrace();
-            out.print("[]"); // fallback if error
+            out.print("[]"); 
         }
 
         out.flush();

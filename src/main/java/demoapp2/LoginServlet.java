@@ -23,7 +23,7 @@ public class LoginServlet extends HttpServlet {
             if (rs.next()) {
                 String storedPassword = rs.getString("password");
                 if (storedPassword.equals(password)) {
-                    // ✅ ONLY set session AFTER successful login verification
+                    
                     HttpSession session = req.getSession();
                     session.setAttribute("email", email);
                     

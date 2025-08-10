@@ -11,7 +11,7 @@ public class RegisterServlet extends HttpServlet {
         res.setContentType("text/html");
         PrintWriter out = res.getWriter();
 
-        // Get form data
+    
         String name = req.getParameter("name");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
@@ -19,20 +19,20 @@ public class RegisterServlet extends HttpServlet {
         String role = req.getParameter("role");
         String location = req.getParameter("location");
 
-        // JDBC details
+       
         String jdbcURL = "jdbc:mysql://localhost:3306/Women";
         String jdbcUsername = "root";         // Your MySQL username
         String jdbcPassword = "Trisha";       // Your MySQL password
 
         try {
-            // Load JDBC driver
+            
             Class.forName("com.mysql.cj.jdbc.Driver");
             System.out.println("Driver loaded successfully.");
 
-            // Establish DB connection
+            
             Connection con = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
 
-            // Check if user already exists
+            
             PreparedStatement checkStmt = con.prepareStatement("SELECT * FROM users WHERE email = ?");
             checkStmt.setString(1, email);
             ResultSet rs = checkStmt.executeQuery();

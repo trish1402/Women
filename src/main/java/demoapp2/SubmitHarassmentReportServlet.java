@@ -28,7 +28,7 @@ public class SubmitHarassmentReportServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         
-        // Set CORS headers for AJAX requests
+      
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
         response.setHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -47,11 +47,11 @@ public class SubmitHarassmentReportServlet extends HttpServlet {
         try {
             System.out.println("=== Harassment Report Servlet Called ===");
             
-            // Get user session - TEMPORARILY BYPASS FOR TESTING
+            
             HttpSession session = request.getSession();
             String userEmail = (String) session.getAttribute("email");
             
-            // TEMPORARY FIX: Set test email if no session (remove this in production)
+            
             if (userEmail == null) {
                 userEmail = "test@example.com";
                 session.setAttribute("email", userEmail);
@@ -60,7 +60,7 @@ public class SubmitHarassmentReportServlet extends HttpServlet {
             
             System.out.println("User email from session: " + userEmail);
 
-            // Get form parameters
+          
             String reportType = request.getParameter("reportType");
             String reporterName = request.getParameter("reporterName");
             String contactNumber = request.getParameter("contactNumber");
@@ -82,7 +82,7 @@ public class SubmitHarassmentReportServlet extends HttpServlet {
             System.out.println("Incident Location: " + incidentLocation);
             System.out.println("Incident Description: " + incidentDescription);
 
-            // Validate required fields
+          
             if (incidentDescription == null || incidentDescription.trim().isEmpty()) {
                 jsonResponse.addProperty("status", "error");
                 jsonResponse.addProperty("message", "Incident description is required");
@@ -97,7 +97,7 @@ public class SubmitHarassmentReportServlet extends HttpServlet {
                 return;
             }
 
-            // Parse optional fields
+        
             Integer age = null;
             if (ageStr != null && !ageStr.trim().isEmpty()) {
                 try {
@@ -126,18 +126,18 @@ public class SubmitHarassmentReportServlet extends HttpServlet {
                 }
             }
 
-            // Generate unique case number
+            
             String caseNumber = "WS" + System.currentTimeMillis() + 
                               UUID.randomUUID().toString().substring(0, 8).toUpperCase();
             System.out.println("Generated case number: " + caseNumber);
 
-            // Database connection and insertion
+            
             System.out.println("Connecting to database...");
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             System.out.println("Database connected successfully");
 
-            // Get user ID from users table (create user if doesn't exist)
+           
             Integer userId = null;
             String getUserIdSql = "SELECT id FROM users WHERE email = ?";
             getUserStmt = conn.prepareStatement(getUserIdSql);
@@ -148,7 +148,7 @@ public class SubmitHarassmentReportServlet extends HttpServlet {
                 userId = userResult.getInt("id");
                 System.out.println("Found existing user ID: " + userId);
             } else {
-                // Create new user if doesn't exist
+                
                 String createUserSql = "INSERT INTO users (email, name, created_at) VALUES (?, ?, NOW())";
                 PreparedStatement createUserStmt = conn.prepareStatement(createUserSql, Statement.RETURN_GENERATED_KEYS);
                 createUserStmt.setString(1, userEmail);
@@ -164,7 +164,7 @@ public class SubmitHarassmentReportServlet extends HttpServlet {
                 createUserStmt.close();
             }
 
-            // Insert harassment report
+       
             String insertSql = "INSERT INTO harassment_reports " +
                 "(user_id, report_type, reporter_name, contact_number, email, age, address, " +
                 "incident_date, incident_time, incident_location, incident_description, " +
@@ -180,14 +180,14 @@ public class SubmitHarassmentReportServlet extends HttpServlet {
             pstmt.setObject(6, age);
             pstmt.setString(7, isAnonymous ? null : address);
             
-            // Handle date
+           
             if (incidentDate != null && !incidentDate.trim().isEmpty()) {
                 pstmt.setDate(8, Date.valueOf(incidentDate));
             } else {
                 pstmt.setNull(8, Types.DATE);
             }
             
-            // Handle time
+           
             if (incidentTime != null && !incidentTime.trim().isEmpty()) {
                 try {
                     pstmt.setTime(9, Time.valueOf(incidentTime + ":00"));
@@ -213,7 +213,7 @@ public class SubmitHarassmentReportServlet extends HttpServlet {
             int result = pstmt.executeUpdate();
 
             if (result > 0) {
-                // Get the generated report ID
+                
                 generatedKeys = pstmt.getGeneratedKeys();
                 int reportId = 0;
                 if (generatedKeys.next()) {
@@ -247,7 +247,7 @@ public class SubmitHarassmentReportServlet extends HttpServlet {
             jsonResponse.addProperty("status", "error");
             jsonResponse.addProperty("message", "Server error: " + e.getMessage());
         } finally {
-            // Close all database resources
+           
             try {
                 if (generatedKeys != null) generatedKeys.close();
                 if (userResult != null) userResult.close();
@@ -263,7 +263,7 @@ public class SubmitHarassmentReportServlet extends HttpServlet {
         out.flush();
     }
     
-    // Handle OPTIONS requests for CORS
+
     protected void doOptions(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setHeader("Access-Control-Allow-Origin", "*");
